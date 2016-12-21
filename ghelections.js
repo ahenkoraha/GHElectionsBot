@@ -64,14 +64,7 @@ bot.dialog('/searchParlaimentary',[
 
 bot.dialog('/searchPresidential',[
     function(session){
-        var cards = getCardAttachment() ;
-        var msg =  new builder.Message(session)
-        .textFormat(builder.TextFormat.xml)
-        .attachmentLayout(builder.AttachmentLayout.carousel)
-        .attachments(cards)
-        
-        session.send(msg);
-        session.endDialog();
+              buildCarouselMessage(session);
     }
     
 ]);
@@ -82,8 +75,15 @@ bot.dialog('/searchParty',[
 
     },
     function(session,results){
-        
-        builder.Prompts.choice(session, "You can further drill down "+ session.userData.electiontype+" election results to specific Political Parties",partyoptions);
+        if(results.response == true){
+            builder.Prompts.choice(session, "You can further drill down "+ session.userData.electiontype+" election results to specific Political Parties",partyoptions);
+        }
+        else{
+            session.endDialog("Thank you! Let me know if I can help with any other information")
+        }
+    },
+    function(session, results){
+       buildCarouselMessage(session);
     }
 ]);
 
@@ -113,4 +113,15 @@ function getCardAttachment(session){
                 ])
     ];
 }
+
+function buildCarouselMessage(session){
+        var cards = getCardAttachment() ;
+        var msg =  new builder.Message(session)
+        .textFormat(builder.TextFormat.xml)
+        .attachmentLayout(builder.AttachmentLayout.carousel)
+        .attachments(cards)
+        
+        session.send(msg);
+        session.endDialog();
+    }
 
