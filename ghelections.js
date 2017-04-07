@@ -1,7 +1,11 @@
 var builder = require('botbuilder');
 var restify = require('restify');
 var buildCarouselMessage = require('./helpers').buildCarouselMessage;
+var getData = require('./helpers').getData;
 
+//=========================================================
+// Bot Setup
+//=========================================================
 //setup restify
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
@@ -9,14 +13,19 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 });
 
 //create chat bot
-var connector = new builder.ChatConnector();
+var connector = new builder.ChatConnector(
+    //appId: process.env.MICORSOFT_APP_ID,
+    //appPassword: process.env.MICROSOFT_APP_PASSWORD
+);
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
 var typeoptions = ['Parliamentary','Presidential'];
 var partyoptions = ['NPP','NDC','NDP','CPP','PPP','INDEPENDENT','PNC'];
 
-
+//=========================================================
+// Bots Dialogs
+//=========================================================
 
 bot.dialog('/', 
     new builder.IntentDialog().matches(/^search/i,
@@ -38,9 +47,9 @@ bot.dialog('/',
                 session.beginDialog('/searchParlaimentary');
             }
             else{
+                //console.log(getData());
                 session.beginDialog('/searchPresidential');
             }
-    
         }
         
     },
