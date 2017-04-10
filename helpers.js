@@ -6,17 +6,8 @@ var http = require("http"),
 
 var data,cards;
 
- function getData(session){
+ function getData(session,options,callfunction){
      console.log('bodee193:');
- var options = {
-          //host:"http://localhost",
-          port: "29208",
-          path:"/ghe/GetPresidentialResults",
-          method: "GET",
-          headers: {
-             "Content-Type":"application/json"
-          }
-      };
 
 var request= http.request(options, function(response){
     // data is streamed in chunks from the server
@@ -34,7 +25,7 @@ var request= http.request(options, function(response){
          // finished transferring data
         // dump the raw data
         data = JSON.parse(body);       
-        buildCarouselMessage(session);
+        buildCarouselMessage(session,callfunction);
     });
 }).on('error',function(e){
      console.log("Got an error:",e);
@@ -42,7 +33,7 @@ var request= http.request(options, function(response){
   request.end();
  } 
 
-function getCardAttachment(session){
+function getCardPresNational(session){
 
     var cardsArr =[];
 
@@ -51,7 +42,7 @@ function getCardAttachment(session){
      cardsArr.push(   new builder.HeroCard(session)
             .title(element.CandidateName)
             .subtitle(element.PartyName+" ["+element.PartyAbrev+"]")
-            .text("<b>Vote Percentage: </b>"+element.Percentage+"%  Vote Count: "+element.Votes+"  results for 271 constituencies out of 275")
+            .text("Vote Percentage: "+element.Percentage+"%  Vote Count: "+element.Votes+"  results for 271 constituencies out of 275")
             .images([
                     builder.CardImage.create(session,element.CandidateImage)
                 ])
@@ -61,8 +52,8 @@ function getCardAttachment(session){
     return cardsArr;
 }
 
-function buildCarouselMessage(session){
-        var cards = getCardAttachment(session) ;
+function buildCarouselMessage(session, callfunction){
+        var cards = callfunction(session) ;
 
         var msg =  new builder.Message(session)
         .textFormat(builder.TextFormat.xml)
@@ -74,3 +65,4 @@ function buildCarouselMessage(session){
     }
 
 module.exports.buildCarouselMessage = getData;
+module.exports.getCardPresNational = getCardPresNational;

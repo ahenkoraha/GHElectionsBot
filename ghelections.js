@@ -1,7 +1,8 @@
 var builder = require('botbuilder');
 var restify = require('restify');
 var buildCarouselMessage = require('./helpers').buildCarouselMessage;
-var getData = require('./helpers').getData;
+var helper = require('./helpers');
+
 
 //=========================================================
 // Bot Setup
@@ -22,6 +23,15 @@ server.post('/api/messages', connector.listen());
 
 var typeoptions = ['Parliamentary','Presidential'];
 var partyoptions = ['NPP','NDC','NDP','CPP','PPP','INDEPENDENT','PNC'];
+var options = {
+          //host:"http://localhost",
+          port: "29208",
+          path:"/ghe/GetPresidentialResults",
+          method: "GET",
+          headers: {
+             "Content-Type":"application/json"
+          }
+      };
 
 //=========================================================
 // Bots Dialogs
@@ -74,7 +84,8 @@ bot.dialog('/searchParlaimentary',[
 
 bot.dialog('/searchPresidential',[
     function(session){
-              buildCarouselMessage(session);
+        
+              buildCarouselMessage(session,options,helper.getCardPresNational);
     }
     
 ]);
