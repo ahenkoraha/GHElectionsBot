@@ -62,9 +62,6 @@ bot.dialog('/',
             }
         }
         
-    },
-    function(session,results){
-        session.beginDialog('/searchParty');
     }
 ])
 );
@@ -90,9 +87,13 @@ bot.dialog('/searchPresidential',[
     
 ]);
 
-bot.dialog('/searchParty',[
-    function(session){
-        builder.Prompts.confirm(session,"Do you want to further filter "+ session.userData.electiontype+" election results?")
+bot.dialog('/searchCandidate',[
+    function(session,args){
+        //builder.Prompts.confirm(session,"Do you want to further filter "+ session.userData.electiontype+" election results?")
+
+        console.log(args);
+        options.path = "/ghe/GetPresidentialResultsByCandidate/" + args.data.replace(" ","");
+        buildCarouselMessage(session,options,helper.getCardPresRegionalByCandidate);
 
     },
     function(session,results){
@@ -107,4 +108,4 @@ bot.dialog('/searchParty',[
        buildCarouselMessage(session);
     }
 ]);
-
+bot.beginDialogAction('searchCandidate','/searchCandidate');

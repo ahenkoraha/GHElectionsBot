@@ -12,6 +12,7 @@ var data,cards;
 var request= http.request(options, function(response){
     // data is streamed in chunks from the server
     // so we have to handle the "data" event 
+    console.log(options);
     var body = "",
         route;
 
@@ -20,7 +21,7 @@ var request= http.request(options, function(response){
         
         body +=chunk;
     });
-
+    console.log(body);
     response.on("end", function(err){
          // finished transferring data
         // dump the raw data
@@ -46,6 +47,31 @@ function getCardPresNational(session){
             .images([
                     builder.CardImage.create(session,element.CandidateImage)
                 ])
+            .buttons([
+                builder.CardAction.dialogAction(session,"searchCandidate",element.CandidateName,"More Details")    
+            ])
+            )
+    });
+
+    return cardsArr;
+}
+
+function getCardPresRegionalByCandidate(session){
+
+    var cardsArr =[];
+
+    data.forEach(function(element) {
+     
+     cardsArr.push(   new builder.HeroCard(session)
+            .title(element.RegionName)
+            .subtitle(element.CandidateName +" - "+element.PartyName+" ["+element.PartyAbrev+"]")
+            .text("Vote Percentage: "+element.Percentage+"%  Vote Count: "+element.Votes+"  results for 271 constituencies out of 275")
+            .images([
+                    builder.CardImage.create(session,element.CandidateImage)
+                ])
+            /*.buttons([
+                builder.CardAction.dialogAction(session,"searchCandidate",element.CandidateName,"More Details")    
+            ])*/
             )
     });
 
@@ -66,3 +92,4 @@ function buildCarouselMessage(session, callfunction){
 
 module.exports.buildCarouselMessage = getData;
 module.exports.getCardPresNational = getCardPresNational;
+module.exports.getCardPresRegionalByCandidate = getCardPresRegionalByCandidate;
