@@ -33,12 +33,17 @@ var options = {
           }
       };
 
+//Create LUIS recognizer that points at model 
+var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/27a48bc9-e9aa-489c-8315-c684b19848a9?subscription-key=12921c53d19644299b30f2f58c7a228e&staging=true&verbose=true&timezoneOffset=0.0&spellCheck=true&q=';
+var recognizer = new builder.LuisRecognizer(model);
+
+
 //=========================================================
 // Bots Dialogs
 //=========================================================
 
 bot.dialog('/', 
-    new builder.IntentDialog().matches(/^search/i,
+    new builder.IntentDialog({recognizers: [recognizer]}).matches(/^Find/i,
     [
         function(session){
             session.send("Not implemented LUIS yet");
