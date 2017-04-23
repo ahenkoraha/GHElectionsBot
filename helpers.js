@@ -7,7 +7,7 @@ var http = require("http"),
 var data,cards;
 
  function getData(session,options,callfunction){
-     console.log('bodee193:');
+     //console.log('bodee193:');
 
 var request= http.request(options, function(response){
     // data is streamed in chunks from the server
@@ -21,12 +21,17 @@ var request= http.request(options, function(response){
         
         body +=chunk;
     });
-    console.log(body);
+    //console.log(body);
     response.on("end", function(err){
          // finished transferring data
         // dump the raw data
-        data = JSON.parse(body);       
+        data = JSON.parse(body); 
+        console.log("logging data");    
+        console.log(data);  
+        
         buildCarouselMessage(session,callfunction);
+        
+        
     });
 }).on('error',function(e){
      console.log("Got an error:",e);
@@ -79,15 +84,20 @@ function getCardPresRegionalByCandidate(session){
 }
 
 function buildCarouselMessage(session, callfunction){
+    if (data == [] || data ==""){
+        var msg = "Sorry, could not find any information. Can I help you with anything else?";
+    }
+    else{
         var cards = callfunction(session) ;
 
         var msg =  new builder.Message(session)
         .textFormat(builder.TextFormat.xml)
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments(cards)
-        
+    }
         session.send(msg);
         session.endDialog();
+
     }
 
 module.exports.buildCarouselMessage = getData;
