@@ -1,7 +1,7 @@
 
 var builder = require('botbuilder');
 var http = require("http"),
-    url = "http://localhost:29208/ghe/GetPresidentialResults";
+    url = "http://ghelections.azurewebsites.net/ghe/GetPresidentialResults";
      
 
 var data,cards;
@@ -53,7 +53,7 @@ function getCardPresNational(session){
                     builder.CardImage.create(session,element.CandidateImage)
                 ])
             .buttons([
-                builder.CardAction.dialogAction(session,"searchCandidate",element.CandidateName,"More Details")    
+                builder.CardAction.dialogAction(session,"searchCandidate",element.CandidateName.replace(" ",""),"More Details")    
             ])
             )
     });

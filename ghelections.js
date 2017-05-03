@@ -24,8 +24,8 @@ server.post('/api/messages', connector.listen());
 var typeoptions = ['Parliamentary','Presidential'];
 var partyoptions = ['NPP','NDC','NDP','CPP','PPP','INDEPENDENT','PNC'];
 var options = {
-          //host:"http://localhost",
-          port: "29208",
+          host:"ghelections.azurewebsites.net",
+          port: "80",
           path:"/ghe/GetPresidentialResults",
           method: "GET",
           headers: {
