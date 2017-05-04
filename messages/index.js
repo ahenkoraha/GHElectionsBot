@@ -1,25 +1,44 @@
 var builder = require('botbuilder');
-var restify = require('restify');
+//var botbuilder_azure = require("botbuilder-azure");
 var buildCarouselMessage = require('./helpers').buildCarouselMessage;
 var helper = require('./helpers');
+var dotenv = require('dotenv');//.config();
+// Load any undefined ENV variables form a specified file.
+process.env.NODE_ENV="development";
+//env('./.env');
 
+var useEmulator = (process.env.NODE_ENV == 'development');
 
 //=========================================================
 // Bot Setup
 //=========================================================
-//setup restify
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
-});
-
 //create chat bot
+
+/*var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure.BotServiceConnector({
+    appId: process.env['MicrosoftAppId'],
+    appPassword: process.env['MicrosoftAppPassword'],
+    stateEndpoint: process.env['BotStateEndpoint'],
+    openIdMetadata: process.env['BotOpenIdMetadata']
+});*/
 var connector = new builder.ChatConnector(
     //appId: process.env.MICORSOFT_APP_ID,
     //appPassword: process.env.MICROSOFT_APP_PASSWORD
 );
 var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
+
+
+//setup restify
+if (useEmulator) {
+    var restify = require('restify');
+    var server = restify.createServer();
+    server.listen(process.env.port || process.env.PORT || 3978, function () {
+    console.log('%s listening to %s', server.name, server.url); 
+    });
+    server.post('/api/messages', connector.listen());
+}
+else{
+    module.exports = { default: connector.listen() }
+}
 
 var typeoptions = ['Parliamentary','Presidential'];
 var partyoptions = ['NPP','NDC','NDP','CPP','PPP','INDEPENDENT','PNC'];
@@ -34,6 +53,11 @@ var options = {
       };
 
 //Create LUIS recognizer that points at model 
+/*var luisAppId = process.env.LuisAppId;
+var luisAPIKey = process.env.LuisAPIKey;
+var luisAPIHostName = process.env.LuisAPIHostName || 'westus.api.cognitive.microsoft.com';
+const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
+*/
 var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/27a48bc9-e9aa-489c-8315-c684b19848a9?subscription-key=12921c53d19644299b30f2f58c7a228e&verbose=true&timezoneOffset=0.0&spellCheck=true&q=';
 var recognizer = new builder.LuisRecognizer(model);
 
