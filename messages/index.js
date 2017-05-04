@@ -4,7 +4,7 @@ var buildCarouselMessage = require('./helpers').buildCarouselMessage;
 var helper = require('./helpers');
 var dotenv = require('dotenv');//.config();
 // Load any undefined ENV variables form a specified file.
-process.env.NODE_ENV="development";
+//process.env.NODE_ENV="development";
 //env('./.env');
 
 var useEmulator = (process.env.NODE_ENV == 'development');
