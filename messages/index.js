@@ -7,7 +7,7 @@ var dotenv = require('dotenv');//.config();
 //process.env.NODE_ENV="development";
 //env('./.env');
 
-var useEmulator = (process.env.NODE_ENV == 'development');
+//var useEmulator = (process.env.NODE_ENV == 'development');
 
 //=========================================================
 // Bot Setup
@@ -28,17 +28,17 @@ var bot = new builder.UniversalBot(connector);
 
 
 //setup restify
-if (useEmulator) {
+//if (useEmulator) {
     var restify = require('restify');
     var server = restify.createServer();
     server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url); 
     });
     server.post('/api/messages', connector.listen());
-}
-else{
-    module.exports = { default: connector.listen() }
-}
+//}
+//else{
+   // module.exports = { default: connector.listen() }
+//}
 
 var typeoptions = ['Parliamentary','Presidential'];
 var partyoptions = ['NPP','NDC','NDP','CPP','PPP','INDEPENDENT','PNC'];
