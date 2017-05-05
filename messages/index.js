@@ -1,5 +1,5 @@
 var builder = require('botbuilder');
-//var botbuilder_azure = require("botbuilder-azure");
+var botbuilder_azure = require("botbuilder-azure");
 var buildCarouselMessage = require('./helpers').buildCarouselMessage;
 var helper = require('./helpers');
 //var dotenv = require('dotenv');//.config();
