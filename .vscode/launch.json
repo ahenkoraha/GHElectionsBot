@@ -13,7 +13,7 @@
             "outFiles": [],
             "sourceMaps": true,
             "env": {
-                "NODE_ENV": "development",
+                "NODE_ENV": "production",
                 "LuisAppId": "27a48bc9-e9aa-489c-8315-c684b19848a9",
                 "LuisAPIKey": "12921c53d19644299b30f2f58c7a228e",
                 "LuisAPIHostName":"westus.api.cognitive.microsoft.com",
