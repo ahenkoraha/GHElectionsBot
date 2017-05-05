@@ -2,7 +2,7 @@
   "name": "ghelectionbot",
   "version": "1.0.0",
   "description": "Ghana election results bot",
-  "main": "index.js",
+  "main": "messages/index.js",
   "dependencies": {
     "botbuilder": "^3.4.4",
     "botbuilder-azure": "^3.0.2"
