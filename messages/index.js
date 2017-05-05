@@ -14,16 +14,17 @@ var useEmulator = (process.env.NODE_ENV == 'development');
 //=========================================================
 //create chat bot
 
-/*var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure.BotServiceConnector({
-    appId: process.env['MicrosoftAppId'],
-    appPassword: process.env['MicrosoftAppPassword'],
+var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure.BotServiceConnector({
+    appId: process.env['MICORSOFT_APP_ID'],
+    appPassword: process.env['MICROSOFT_APP_PASSWORD'],
     stateEndpoint: process.env['BotStateEndpoint'],
     openIdMetadata: process.env['BotOpenIdMetadata']
-});*/
-var connector = new builder.ChatConnector(
-    //appId: process.env.MICORSOFT_APP_ID,
-    //appPassword: process.env.MICROSOFT_APP_PASSWORD
-);
+});
+/*var connector = new builder.ChatConnector({
+    appId: process.env['MICORSOFT_APP_ID'],
+    appPassword: process.env['MICROSOFT_APP_PASSWORD']
+    }
+);*/
 var bot = new builder.UniversalBot(connector);
 
 
@@ -53,13 +54,13 @@ var options = {
       };
 
 //Create LUIS recognizer that points at model 
-/*var luisAppId = process.env.LuisAppId;
+var luisAppId = process.env.LuisAppId;
 var luisAPIKey = process.env.LuisAPIKey;
 var luisAPIHostName = process.env.LuisAPIHostName || 'westus.api.cognitive.microsoft.com';
-const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
-*/
-var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/27a48bc9-e9aa-489c-8315-c684b19848a9?subscription-key=12921c53d19644299b30f2f58c7a228e&verbose=true&timezoneOffset=0.0&spellCheck=true&q=';
-var recognizer = new builder.LuisRecognizer(model);
+const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v2.0/apps/' + luisAppId + '?subscription-key=' + luisAPIKey+'&verbose=true&timezoneOffset=0.0&spellCheck=true&q=';
+console.log(LuisModelUrl);
+//var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/27a48bc9-e9aa-489c-8315-c684b19848a9?subscription-key=12921c53d19644299b30f2f58c7a228e&verbose=true&timezoneOffset=0.0&spellCheck=true&q=';
+var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 
 
 //=========================================================
