@@ -28,20 +28,6 @@ var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure
 );*/
 var bot = new builder.UniversalBot(connector);
 
-
-//setup restify
-if (useEmulator) {
-    var restify = require('restify');
-    var server = restify.createServer();
-    server.listen(process.env.port || process.env.PORT || 3978, function () {
-    console.log('%s listening to %s', server.name, server.url); 
-    });
-    server.post('/api/messages', connector.listen());
-}
-else{
-   module.exports = { default: connector.listen() }
-}
-
 var typeoptions = ['Parliamentary','Presidential'];
 var partyoptions = ['NPP','NDC','NDP','CPP','PPP','INDEPENDENT','PNC'];
 var options = {
@@ -141,3 +127,16 @@ bot.dialog('/searchCandidate',[
     }
 ]);
 bot.beginDialogAction('searchCandidate','/searchCandidate');
+
+//setup restify
+if (useEmulator) {
+    var restify = require('restify');
+    var server = restify.createServer();
+    server.listen(process.env.port || process.env.PORT || 3978, function () {
+    console.log('%s listening to %s', server.name, server.url); 
+    });
+    server.post('/api/messages', connector.listen());
+}
+else{
+   module.exports = { default: connector.listen() }
+}
