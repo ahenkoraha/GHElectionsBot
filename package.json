@@ -4,12 +4,12 @@
   "description": "Ghana election results bot",
   "main": "messages/index.js",
   "dependencies": {
-    "botbuilder": "^3.4.4",
+    "botbuilder": "^3.7.0",
     "botbuilder-azure": "^3.0.2"
   },
   "devDependencies": {
-      "restify": "^4.3.0"
-  }, 
+    "restify": "^4.3.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

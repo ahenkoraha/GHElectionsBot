@@ -55,7 +55,8 @@ var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 //=========================================================
 
 bot.dialog('/', 
-    new builder.IntentDialog({recognizers: [recognizer]}).matches('FindPresidentialResults',
+    new builder.IntentDialog({recognizers: [recognizer]})
+    .matches('FindPresidentialResults',
     [
         function(session,args,next){
             console.log(args);

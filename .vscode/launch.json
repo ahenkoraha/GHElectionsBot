@@ -13,13 +13,13 @@
             "outFiles": [],
             "sourceMaps": true,
             "env": {
-                "NODE_ENV": "production",
+                "NODE_ENV": "development",
                 "LuisAppId": "27a48bc9-e9aa-489c-8315-c684b19848a9",
                 "LuisAPIKey": "12921c53d19644299b30f2f58c7a228e",
-                "LuisAPIHostName":"westus.api.cognitive.microsoft.com",
-                "MICORSOFT_APP_ID": "625f1bc1-55b3-4adb-9562-58a2de3bcc34",
-                "MICROSOFT_APP_PASSWORD": "SDLb4DP0DJ0rxDqQBMiFdh8",
-                "PORT":"3978"
+                "LuisAPIHostName":"westus.api.cognitive.microsoft.com"//,
+                //"MICORSOFT_APP_ID": "625f1bc1-55b3-4adb-9562-58a2de3bcc34",
+                //"MICROSOFT_APP_PASSWORD": "SDLb4DP0DJ0rxDqQBMiFdh8",
+                //"PORT":"9000"
             }
         },
         {
